@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>test hamberger menu +logo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style> 
+    /* CSS */
+    body
+
+    /* フォント指定 */
+    {
+      font-family: "Helvetica Neue", Arial, Roboto, sans-serif;
+      margin: 0;
+      padding: 0; /* 意図しない余白をなくす */
+      background-color: #f0f0f0;
+    }
+    /* ロゴとハンバーガーメニューをheader要素で配置するコンテナ */
+    .header-container {
+      position: fixed; /* 画面に固定 */
+      top: 0;
+      left: 0;
+      display: flex; /* Flexboxを適用(子要素を横並びに配置) */
+      align-items: center; /* 垂直方向の中央揃え */
+      width: 100%; /* 画面全体の幅 */
+      height: 68px;
+      padding: 0 20px;
+      box-sizing: border-box; /* paddingやborderを幅や高さに含める */
+      z-index: 1000; /*前面に表示したいので大きな値を指定 */
+    }
+    
+    .header-color { /* 6ロゴに被ってしまうので黄帯を消すために別配置 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 68px;
+      background-color: #e1ff00;
+      z-index: auto;
+    }
+    /* header-colorを非表示 */
+    .header-color.hidden {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    /* ヘッダのロゴコンテナ */
+    .logo {
+      position: relative;
+      margin-right: auto; /* Flexbox内の左端に寄せる */
+      z-index: 1500; /* header-colorより前面に表示 */
+    }
+    /* ロゴのサイズ調整 */
+    .logo__image {
+      width: 125px;
+      height: auto;
+    }
+    /* ロゴを非表示 */
+    .logo.hidden {
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    /* ハンバーガーメニューbox*/
+    .hamburger {
+      position: relative; /* absolutの基準となるrelative */
+      width: 36px;
+      height: 16px;
+      cursor: pointer; /* カーソル変化 */
+      margin-left: auto; /* Flexbox内の右端に寄せる */
+      z-index: 1500; /* header-colorより前面に表示 */
+    }
+    /* ハンバーガーメニューのスタイル */
+    .hamburger__line {
+      position: absolute; /* 絶対位置に配置(ハンバーガーメニューboxに対するabsolut) */
+      width: 36px;
+      height: 2px;
+      background-color: #3c3c3c;
+      transition: all 300ms ease; /* CSSアニメーション(参考 https://blog.asobou.co.jp/web/css-animation3) */
+      transform: rotate(0deg); /* 回転 */
+    }
+    /* 線の位置（通常） */
+    .hamburger__line:nth-child(1) { top: 0px; }
+    .hamburger__line:nth-child(2) { top: 8px; }
+    .hamburger__line:nth-child(3) { top: 16px; }
+
+    /* ×変形　*/
+    .hamburger.open .hamburger__line:nth-child(1) {
+      top: 8px;
+      transform: rotate(32deg);
+    }
+    .hamburger.open .hamburger__line:nth-child(2) {
+      opacity: 0; /* 非表示 */
+    }
+    .hamburger.open .hamburger__line:nth-child(3) {
+      top: 8px;
+      transform: rotate(-32deg);
+    }
+    
+    /* メニュー本体(Flexboxのコンテナ) */
+    .menu {
+      flex-direction: column;
+      display: flex;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-30px); /* 30px下に移動 */
+      transition: all 300ms ease; /* 0.3秒で表示 */
+      width: 100%;
+      height: 100vh; /* 表示エリアの100%(100%だけだとコンテナの100%になる) */
+      background-color: #e1ff00;
+      color: #333333;
+      padding-top: 26px;
+      padding-left: 30px;
+      gap: 14px;
+    }
+    /* メニュー本体のスタイル */
+    .menu__item {
+      text-decoration: none;/* リンクアンダーラインを消す */
+      font-size: 19px;
+      font-weight: 700;
+      color: inherit; /* 親要素を踏襲 */
+    }
+    /* メニュー上のロゴのコンテナ */
+    .logo__menu {
+      margin-bottom: 3px;
+    }
+    /* ロゴのサイズを調整 */
+    .logo__menu__image {
+      width: auto; 
+      height: 90px;
+    }
+    /* メニューオープンで表示 */
+     .menu.open {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    /* アニメーション */
+
+    /* 上から下へ */
+    .slide-top-enter-active,
+    .slide-top-leave-active {
+      transition: all 300ms ease;
+    }
+    .slide-top-enter-from,
+    .slide-top-leave-to {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    .slide-top-enter-to,
+    .slide-top-leave-from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header-container">
+    <a href="https://sixdesign.net">
+     <div class="logo">
+        <img src="https://sixdesign.net/wp-content/uploads/2018/07/logo_sp_250_34.png" alt="ロゴ" class="logo__image">
+     </div>
+     </a>
+     <div class="hamburger" onclick="toggleMenu()">
+        <div class="hamburger__line"></div>
+        <div class="hamburger__line"></div>
+        <div class="hamburger__line"></div>
+     </div>
+     <div class="header-color">
+     </div>
+  </header>
+  
+  <div class="menu slide-top" id="menu">
+    <div class="logo__menu">
+        <img src="https://sixdesign.net/wp-content/uploads/2018/07/logo_210x2.png" alt="ロゴ" class="logo__menu__image">
+    </div>
+    <a href="https://sixdesign.net" class="menu__item">
+          <span class="text">top</span>
+        </a>
+    <a href="https://sixdesign.net/latest/" class="menu__item">
+          <span class="text">latest</span>
+        </a>
+    <a href="https://sixdesign.net/category/branding-advertising/" class="menu__item">
+          <span class="text">branding / promotion</span>
+        </a>
+    <a href="https://sixdesign.net/category/entertainment/" class="menu__item">
+          <span class="text">entertainment</span>
+        </a>
+    <a href="https://sixdesign.net/category/non-commercial/" class="menu__item">
+          <span class="text">non commercial</span>
+        </a>
+    <a href="https://sixdesign.net/category/logo-symbol/" class="menu__item">
+          <span class="text">logo / character</span>
+        </a>
+    <a href="https://sixdesign.net/category/web/" class="menu__item">
+          <span class="text">web</span>
+        </a>
+    <a href="https://sixdesign.net/category/news/" class="menu__item">
+          <span class="text">news</span>
+        </a>
+    <a href="https://sixdesign.net/about/" class="menu__item">
+          <span class="text">about</span>
+        </a>
+    <a href="https://sixdesign.net/contact/" class="menu__item">
+          <span class="text">contact</span>
+        </a>
+  </div>
+
+  <script>
+  /* JavaScript */
+    function toggleMenu() {
+    const menu = document.getElementById('menu');
+    const trigger = document.querySelector('.hamburger');
+    const headerLogo = document.querySelector('.logo'); /* ロゴを取得 */
+    const headerColor = document.querySelector('.header-color'); /* header-colorを取得 */
+
+    menu.classList.toggle('open');
+    trigger.classList.toggle('open');
+
+    /* ロゴコンテナとheader-colorの表示/非表示を切り替える */
+    headerLogo.classList.toggle('hidden');
+    headerColor.classList.toggle('hidden');
+  }
+  </script>
+
+</body>
+</html>
