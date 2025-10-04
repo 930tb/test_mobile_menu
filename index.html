@@ -12,24 +12,24 @@
     {
       font-family: "Helvetica Neue", Arial, Roboto, sans-serif;
       margin: 0;
-      padding: 0; /* 意図しない余白をなくす */
+      padding: 0;
       background-color: #f0f0f0;
     }
-    /* ロゴとハンバーガーメニューをheader要素で配置するコンテナ */
+    /* ロゴとハンバーガーメニュー */
     .header-container {
       position: fixed; /* 画面に固定 */
       top: 0;
       left: 0;
-      display: flex; /* Flexboxを適用(子要素を横並びに配置) */
-      align-items: center; /* 垂直方向の中央揃え */
-      width: 100%; /* 画面全体の幅 */
+      display: flex; /* Flexboxで横並びに配置 */
+      align-items: center;
+      width: 100%;
       height: 80px;
       padding: 0 30px;
       box-sizing: border-box; /* paddingやborderを幅や高さに含める */
-      z-index: 1000; /*前面に表示したいので大きな値を指定 */
+      z-index: 1000;
     }
 
-    .header-color { /* 6ロゴに被ってしまうので黄帯を消すために別配置 */
+    .header-color { /* ロゴに被ってしまうので黄帯を消すために別配置 */
       position: fixed;
       top: 0;
       left: 0;
@@ -47,7 +47,7 @@
     /* ヘッダのロゴコンテナ */
     .logo {
       position: relative;
-      margin-right: auto; /* Flexbox内の左端に寄せる */
+      margin-right: auto; /* 左端に寄せる */
       z-index: 1500; /* header-colorより前面に表示 */
     }
     /* ロゴのサイズ調整 */
@@ -61,43 +61,43 @@
       opacity: 0;
     }
 
-    /* ハンバーガーメニューbox*/
+    /* ハンバーガーメニュー*/
     .hamburger {
-      position: relative; /* absolutの基準となるrelative */
+      position: relative;
       width: 41px;
       height: 21px;
-      cursor: pointer; /* カーソル変化 */
-      margin-left: auto; /* Flexbox内の右端に寄せる */
+      cursor: pointer;
+      margin-left: auto; /* 右端に寄せる */
       z-index: 1500; /* header-colorより前面に表示 */
     }
     /* ハンバーガーメニューのスタイル */
     .hamburger__line {
-      position: absolute; /* 絶対位置に配置(ハンバーガーメニューboxに対するabsolut) */
+      position: absolute; /* 絶対位置に配置 */
       width: 41px;
       height: 3px;
       background-color: #3c3c3c;
-      transition: all 300ms ease; /* CSSアニメーション(参考 https://blog.asobou.co.jp/web/css-animation3) */
-      transform: rotate(0deg); /* 回転 */
+      transition: all 300ms ease;
+      transform: rotate(0deg);
     }
     /* 線の位置（通常） */
     .hamburger__line:nth-child(1) { top: 0px; }
     .hamburger__line:nth-child(2) { top: 9px; }
     .hamburger__line:nth-child(3) { top: 18px; }
 
-    /* ×変形　*/
+    /* 変形　*/
     .hamburger.open .hamburger__line:nth-child(1) {
       top: 8px;
       transform: rotate(32deg);
     }
     .hamburger.open .hamburger__line:nth-child(2) {
-      opacity: 0; /* 非表示 */
+      opacity: 0;
     }
     .hamburger.open .hamburger__line:nth-child(3) {
       top: 8px;
       transform: rotate(-32deg);
     }
 
-    /* メニュー本体(Flexboxのコンテナ) */
+    /* メニュー本体 */
     .menu {
       flex-direction: column;
       display: flex;
@@ -106,7 +106,7 @@
       transform: translateY(-30px); /* 30px下に移動 */
       transition: all 300ms ease; /* 0.3秒で表示 */
       width: 100%;
-      height: 100vh; /* 表示エリアの100%(100%だけだとコンテナの100%になる) */
+      height: 100vh; /* 表示エリアの100% */
       background-color: #e1ff00;
       color: #333333;
       padding-top: 26px;
@@ -115,12 +115,12 @@
     }
     /* メニュー本体のスタイル */
     .menu__item {
-      text-decoration: none;/* リンクアンダーラインを消す */
+      text-decoration: none;
       font-size: 19px;
       font-weight: 700;
       color: inherit; /* 親要素を踏襲 */
     }
-    /* メニュー上のロゴのコンテナ */
+    /* メニュー上のロゴ */
     .logo__menu {
       margin-bottom: 3px;
     }
@@ -137,8 +137,6 @@
     }
 
     /* アニメーション */
-
-    /* 上から下へ */
     .slide-top-enter-active,
     .slide-top-leave-active {
       transition: all 300ms ease;
